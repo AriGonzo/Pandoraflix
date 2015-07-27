@@ -1,0 +1,15 @@
+<div class="row">
+    <img class="col-md-4" id="showPoster" src="{{poster}}}" />
+    <div class="col-md-4" id="summaryDiv">
+        <h4 id="summary"> {{summary}}}</h4>
+    </div>
+    <div class="col-md-3">
+        <h4><u>Shows you'll see:</u></h4>
+        <ul id="suggestions">
+            {{#each suggestions}}
+            <li>{{this.show_title}}</li>
+            {{/each}}
+        </ul>
+        <a href="javascript:void(0)" id="fetchShowBtn" class="btn btn-success btn-raised">Let's Watch</a>
+    </div>
+</div>

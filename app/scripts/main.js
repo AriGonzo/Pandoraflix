@@ -1,10 +1,12 @@
 require([
 	'backbone',
 	'application',
-	'regionManager'
+	'regionManager',
+	'controllers/welcomeController'
 ],
-function ( Backbone, App ) {
+function ( Backbone, App, Region, WelcomeApp) {
     'use strict';
 
 	App.start();
+
 });

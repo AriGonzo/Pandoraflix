@@ -1,24 +1,40 @@
 define([
-	'backbone',
+	'jquery',
+	'backbone.marionette',
 	'communicator',
-	'hbs!tmpl/welcome'
+	'templates',
+	'hbs!tmpl/welcome',
+	'hbs!tmpl/landing'
 ],
 
-function( Backbone, Communicator, Welcome_tmpl ) {
+function($, Marionette, Communicator, templates, Welcome_tmpl, Landing_tmpl ) {
     'use strict';
-
+	console.log(templates)
 	var welcomeTmpl = Welcome_tmpl;
+	var landingTmpl = Landing_tmpl;
 
-	var App = new Backbone.Marionette.Application();
+	var App = new Marionette.Application();
 
 	/* Add application regions here */
-	App.addRegions({});
+	App.addRegions({
+		main: '#main'
+	});
 
 	/* Add initializers here */
 	App.addInitializer( function () {
-		document.body.innerHTML = welcomeTmpl({ success: "CONGRATS!" });
-		Communicator.mediator.trigger("APP:START");
+		//$.material.init()
 	});
 
-	return App;
+	App.navigate = function(route,  options){
+		options || (options = {});
+		Backbone.history.navigate(route, options);
+	};
+
+	App.on('start', function(){
+		Backbone.history.start();
+		App.trigger('start:welcome')
+	})
+
+	return window.app = App
+
 });

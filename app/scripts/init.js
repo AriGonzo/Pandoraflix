@@ -5,7 +5,6 @@ require.config({
     /* starting point for application */
     deps: ['backbone.marionette', 'bootstrap', 'main'],
 
-
     shim: {
         backbone: {
             deps: [
@@ -17,6 +16,9 @@ require.config({
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
+        },
+        material: {
+            deps: ['jquery']
         }
     },
 
@@ -24,15 +26,17 @@ require.config({
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone-amd/backbone',
         underscore: '../bower_components/underscore-amd/underscore',
+        jqueryUI: '../bower_components/jquery-ui/jquery-ui',
+        jsonp: './plugins/jsonp',
 
         /* alias all marionette libs */
-        'backbone.marionette': '../bower_components/backbone.marionette/lib/core/amd/backbone.marionette',
-        'backbone.wreqr': '../bower_components/backbone.wreqr/lib/amd/backbone.wreqr',
-        'backbone.babysitter': '../bower_components/backbone.babysitter/lib/amd/backbone.babysitter',
+        'backbone.marionette': '../bower_components/backbone.marionette/lib/core/backbone.marionette',
+        'backbone.wreqr': '../bower_components/backbone.wreqr/lib/backbone.wreqr',
+        'backbone.babysitter': '../bower_components/backbone.babysitter/lib/backbone.babysitter',
 
         /* alias the bootstrap js lib */
         bootstrap: 'vendor/bootstrap',
-
+        material: '../bower_components/bootstrap-material-design/dist/js/material',
         /* Alias text.js for template loading and shortcut the templates dir to tmpl */
         text: '../bower_components/requirejs-text/text',
         tmpl: "../templates",

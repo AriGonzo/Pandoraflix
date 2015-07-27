@@ -1,0 +1,35 @@
+#main {
+    text-align: center;
+    margin-top: 3em;
+}
+
+#showInput {
+    font-size: 50pt;
+    height: 100%;
+    text-align: center;
+}
+#showResults {
+    margin-top: 3em;
+}
+#showPoster {
+    max-height: 225px;
+    width: auto;
+    padding-left: 10px;
+}
+
+#summary {
+    text-align: justify;
+}
+
+#summaryDiv h3 {
+    margin-top: 0;
+}
+
+#suggestions {
+    padding: 0;
+}
+
+#suggestions li {
+    list-style-type: none;
+    font-size: 12pt;
+}
