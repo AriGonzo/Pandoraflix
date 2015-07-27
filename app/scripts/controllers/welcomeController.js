@@ -3,7 +3,10 @@ define([
 	'application',
   'templates',
   'jqueryUI',
-  'jsonp'
+  'jsonp',
+  'spinnerJQ',
+  'spin'
+
 ],
 function(require, app, templates) {
     'use strict';
@@ -40,6 +43,8 @@ function(require, app, templates) {
         this.welcomeView.on('show', function () {
           var inputView = new Show.View();
           inputView.on('fetchShowApi', function(showName){
+            var loadingView = new Show.Loading();
+            that.welcomeView.showResults.show(loadingView)
             var apiBase = "http://netflixroulette.net/api/api.php?title="
             var suggestApi = "https://www.tastekid.com/api/similar"
             var APIKey = "148698-AriGonza-HKXFYJ6D"
@@ -52,6 +57,7 @@ function(require, app, templates) {
               async: false,
               data: {
                 q: showName.show,
+                info: 1,
                 type: 'show',
                 k: APIKey,
                 format: "json"
@@ -81,18 +87,22 @@ function(require, app, templates) {
                       return
                     } else {
                       var data = JSON.parse(xhr.responseText)
-                      var resultModel = new Show.ResultModel({
-                        category: data.category,
-                        poster: data.poster,
-                        title: data.show_title,
-                        summary: data.summary,
-                        id: data.show_id
+                      $.get('http://www.omdbapi.com/?t=' + showName.show + '&plot=long&r=json', function (poster) {
+                        console.log(poster)
+                        var resultModel = new Show.ResultModel({
+                          category: data.category,
+                          poster: poster.Poster,
+                          title: data.show_title,
+                          summary: data.summary,
+                          id: data.show_id
+                        })
+                        var resultsView = new Show.Results({
+                          model: resultModel,
+                          suggestions: netflixArray
+                        })
+                        that.welcomeView.showResults.empty()
+                        that.welcomeView.showResults.show(resultsView)
                       })
-                      var resultsView = new Show.Results({
-                        model: resultModel,
-                        suggestions: netflixArray
-                      })
-                      that.welcomeView.showResults.show(resultsView)
                     }
                   }
                 })
@@ -123,7 +133,16 @@ function(require, app, templates) {
         fetchShowBtn: '#fetchShowBtn'
       },
       events: {
-        'click @ui.fetchShowBtn': 'fetchShow'
+        'click @ui.fetchShowBtn': 'fetchShow',
+        'keypress @ui.showInput': "checkKey"
+      },
+      checkKey: function (e) {
+        var code = e.keyCode || e.which;
+
+        if( code === 13 ) {
+          this.fetchShow()
+          return false;
+        }
       },
       fetchShow: function(){
         $('#inputH1').html("You picked")
@@ -145,6 +164,41 @@ function(require, app, templates) {
     })
     Show.ResultModel = Backbone.Model.extend({
     })
+    Show.Loading = Marionette.ItemView.extend({
+      template: templates.loading,
+
+      title: "Loading Data",
+      message: "Please wait, data is loading.",
+
+      serializeData: function(){
+        return {
+          title: Marionette.getOption(this, "title"),
+          message: Marionette.getOption(this, "message")
+        }
+      },
+
+      onShow: function(){
+        var opts = {
+          lines: 13, // The number of lines to draw
+          length: 20, // The length of each line
+          width: 10, // The line thickness
+          radius: 30, // The radius of the inner circle
+          corners: 1, // Corner roundness (0..1)
+          rotate: 0, // The rotation offset
+          direction: 1, // 1: clockwise, -1: counterclockwise
+          color: "#000", // #rgb or #rrggbb
+          speed: 1, // Rounds per second
+          trail: 60, // Afterglow percentage
+          shadow: false, // Whether to render a shadow
+          hwaccel: false, // Whether to use hardware acceleration
+          className: "spinner", // The CSS class to assign to the spinner
+          zIndex: 2e9, // The z-index (defaults to 2000000000)
+          top: "30px", // Top position relative to parent in px
+          left: "auto" // Left position relative to parent in px
+        };
+        $("#spinner").spin(opts);
+      }
+    });
   })
 
 });

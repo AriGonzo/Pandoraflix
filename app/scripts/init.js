@@ -19,6 +19,9 @@ require.config({
         },
         material: {
             deps: ['jquery']
+        },
+        spinnerJQ: {
+            deps: ['spin']
         }
     },
 
@@ -28,6 +31,8 @@ require.config({
         underscore: '../bower_components/underscore-amd/underscore',
         jqueryUI: '../bower_components/jquery-ui/jquery-ui',
         jsonp: './plugins/jsonp',
+        spin: './plugins/spin',
+        spinnerJQ: './plugins/spin.jquery',
 
         /* alias all marionette libs */
         'backbone.marionette': '../bower_components/backbone.marionette/lib/core/backbone.marionette',

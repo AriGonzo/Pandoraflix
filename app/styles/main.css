@@ -12,8 +12,6 @@
     margin-top: 3em;
 }
 #showPoster {
-    max-height: 225px;
-    width: auto;
     padding-left: 10px;
 }
 
@@ -32,4 +30,7 @@
 #suggestions li {
     list-style-type: none;
     font-size: 12pt;
+}
+#clear {
+    clear: both;
 }

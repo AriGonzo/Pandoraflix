@@ -5,6 +5,7 @@ define(function (require) {
   return {
     welcome: require('hbs!../templates/welcome'),
     results: require('hbs!../templates/results'),
-    layout: require('hbs!../templates/layout')
+    layout: require('hbs!../templates/layout'),
+    loading: require('hbs!../templates/loading'),
   }
 })
